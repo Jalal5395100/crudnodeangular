@@ -1,0 +1,92 @@
+<div>
+  <div class="alert alert-success" role="alert" *ngIf="IsSuccess">
+    Record is updated successfully!
+  </div>
+  <div class="alert alert-warning" role="alert" *ngIf="IsFailure">
+    Something went wrong!
+  </div>
+</div>
+<div class="container">
+  <div class="card mt-4">
+    <div class="card-body">
+      <form [formGroup]="contactForm">
+        <input type="text" hidden formControlName="id" />
+        <div class="row">
+          <!--First Name *-->
+          <div class="col-md-4 col-sm-6 col-lg-3">
+            <label>First Name:</label>
+            <input
+              type="text"
+              name="fName"
+              class="form-control"
+              placeholder="First Name"
+              formControlName="fName"
+              [ngClass]="{ 'is-invalid': submitted && f.fName.errors }"
+            />
+            <div *ngIf="submitted && f.fName.errors" class="invalid-feedback">
+              <div *ngIf="f.fName.errors.required">First Name is required</div>
+            </div>
+          </div>
+          <!--Last Name *-->
+          <div class="col-md-4 col-sm-6 col-lg-3">
+            <label>Last Name: </label>
+            <input
+              type="text"
+              name="lName"
+              class="form-control"
+              placeholder="Last Name"
+              formControlName="lName"
+              [ngClass]="{ 'is-invalid': submitted && f.lName.errors }"
+            />
+            <div *ngIf="submitted && f.lName.errors" class="invalid-feedback">
+              <div *ngIf="f.lName.errors.required">Last Name is required</div>
+            </div>
+          </div>
+          <!--Phone No *-->
+          <div class="col-md-4 col-sm-6 col-lg-3">
+            <label>Phone No: </label>
+            <input
+              type="text"
+              name="phoneNo"
+              class="form-control"
+              placeholder="Phone No"
+              formControlName="phoneNo"
+              maxlength="11"
+              [ngClass]="{ 'is-invalid': submitted && f.phoneNo.errors }"
+            />
+            <div *ngIf="submitted && f.phoneNo.errors" class="invalid-feedback">
+              <div *ngIf="f.phoneNo.errors.required">Phone no is required</div>
+              <div
+                class="text-danger"
+                *ngIf="contactForm.controls['phoneNo'].hasError('pattern')"
+              >
+                Please Enter valid Mobile number (without dash)
+              </div>
+            </div>
+          </div>
+
+          <!--Email *-->
+          <div class="col-md-4 col-sm-6 col-lg-3">
+            <label>Email: </label>
+            <input
+              type="email"
+              name="Email"
+              class="form-control"
+              placeholder="Email"
+              formControlName="Email"
+              [ngClass]="{ 'is-invalid': submitted && f.Email.errors }"
+            />
+            <div *ngIf="submitted && f.Email.errors" class="invalid-feedback">
+              <div *ngIf="f.Email.errors.required">Email is required</div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <button class="btn btn-primary btn-sm" (click)="update()">
+          Update
+        </button>
+        <button class="btn btn-danger btn-sm" (click)="cancel()">Back</button>
+      </form>
+    </div>
+  </div>
+</div>
