@@ -17,6 +17,11 @@ exports.createUser = (req, res, next) => {
         });
       })
       .catch((err) => {
+        if(err.errors.Email.kind=="unique"){
+          res.json({
+            message: "Duplicate!"
+          });
+        }
         res.status(500).json({
           message: "Error in Creating User!",
           err:err
@@ -36,13 +41,12 @@ exports.getAllUsers = (req, res, next) => {
     })
     .catch((error) => {
       res.status(500).json({
-        message: "fetching posts failed!",
+        message: "failed to get user!",
       });
     });
 };
 
 exports.updateUser = (req, res) => {
-  console.log(req.body.id,"dddoioio")
   const updateUser = new user({
     _id: req.body.id,
     fName: req.body.fName,
@@ -55,7 +59,7 @@ exports.updateUser = (req, res) => {
       if (result.n > 0) {
         res.status(200).json({ message: "Update Successfull" });
       } else {
-        res.status(401).json({ message: "Not Authorized" });
+        res.status(401).json({ message: "Something went wrong" });
       }
     })
     .catch((error) => {
@@ -71,12 +75,12 @@ exports.searchUser = (req, res, next) => {
       if (getUser) {
         res.status(200).json(getUser);
       } else {
-        res.status(404).json({ message: "Post not found!" });
+        res.status(404).json({ message: "User not found!" });
       }
     })
     .catch((error) => {
       res.status(500).json({
-        message: "fetching post failed!",
+        message: "fetching user failed!",
         error:error
       });
     });

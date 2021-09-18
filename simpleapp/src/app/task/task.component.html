@@ -5,6 +5,9 @@
   <div class="alert alert-success" role="alert" *ngIf="IsDeleteSuccess">
     User is deleted successfully!
   </div>
+  <div class="alert alert-warning" role="alert" *ngIf="IsEmailFailure">
+    Email is already registered!
+  </div>
   <div class="alert alert-warning" role="alert" *ngIf="IsFailure">
     Something went wrong!
   </div>

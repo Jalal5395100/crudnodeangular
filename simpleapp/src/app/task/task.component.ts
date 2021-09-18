@@ -18,6 +18,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   submitted: boolean = false;
   IsSuccess: boolean = false;
   IsDeleteSuccess: boolean = false;
+  IsEmailFailure: boolean = false;
   IsFailure: boolean = false;
   getUserList: Subscription;
   createUser: Subscription;
@@ -85,7 +86,13 @@ export class TaskComponent implements OnInit, OnDestroy {
       Email: this.contactForm.value['Email'],
     };
     this.createUser = this.taskService.createUser(json).subscribe((res) => {
-      if (res) {
+     if(res["message"]=="Duplicate!"){
+      this.IsEmailFailure = true;
+      setTimeout(() => {
+        this.IsEmailFailure = false;
+      }, 1000);
+     }
+      else if (res["message"]=="User created!") {
         this.getUser();
         this.contactForm.reset();
         this.submitted = false;
@@ -145,7 +152,6 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   delete(id) {
-    console.log(this.deletedId, 'save');
     this.popUpSer
       .confirm('Please Confirm', 'Do you really want to Delete!')
       .then((confirmed) => {
